@@ -113,26 +113,25 @@ namespace RSA
 
         public static string EnCrypt(List<char> message ,BigInteger n, BigInteger e) {
             string cryptedMessage = "";
-            BigInteger indexEC;
+            int charASCIIcode;
+            BigInteger cryptedChar;
             foreach (char m in message)
             {
-                indexEC = Array.IndexOf(characters, m);
-                indexEC = BigInteger.ModPow(indexEC, e, n);
-                cryptedMessage += indexEC.ToString() + " ";
+                charASCIIcode = (int)m;
+                cryptedChar = BigInteger.ModPow(charASCIIcode, e, n);
+                cryptedMessage += cryptedChar.ToString() + " ";
             }
             return cryptedMessage;
         }
 
         public static string DeCrypt(List<long> cryptedMessage, BigInteger n, BigInteger d)
         {
-            BigInteger indexDC;
             string deCryptedMessage = "";
-            int charindex;
+            BigInteger encryptedChar;
             foreach (long c in cryptedMessage)
             {
-                indexDC = BigInteger.ModPow(c, d, n);
-                charindex = (int)indexDC;
-                deCryptedMessage += characters[charindex];
+                encryptedChar = BigInteger.ModPow((int)c, d, n);
+                deCryptedMessage += (char)encryptedChar;
             }
             return deCryptedMessage;
         }

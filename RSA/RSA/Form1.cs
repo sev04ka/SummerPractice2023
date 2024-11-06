@@ -1,4 +1,6 @@
 using System.Numerics;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RSA
 {
@@ -8,10 +10,67 @@ namespace RSA
         public Form1()
         {
             InitializeComponent();
+
+            openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+            saveFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+
         }
 
         bool enableCalculateNbuttonP = false;
         bool enableCalculateNbuttonQ = false;
+        string fileText;
+
+        private void ChooseFile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            string filename = openFileDialog1.FileName;
+            fileText = System.IO.File.ReadAllText(filename);
+        }
+
+        private void EncryptFile_Click(object sender, EventArgs e)
+        {
+            if (fileText != null)
+            {
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+                BigInteger N = BigInteger.Parse(inputN.Text);
+                BigInteger E = BigInteger.Parse(inputE.Text);
+                char[] textArray = fileText.ToCharArray();
+                List<char> inputText = new List<char>(textArray);
+                string encryptedText = RSAMethods.EnCrypt(inputText, N, E);
+
+                string filename = saveFileDialog1.FileName;
+                System.IO.File.WriteAllText(filename, encryptedText);
+                MessageBox.Show("װאיכ חארטפנמגאם");
+                fileText = null;
+            }
+        }
+
+        private void DecryptFile_Click(object sender, EventArgs e)
+        {
+            if (fileText != null)
+            {
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+                BigInteger D = BigInteger.Parse(inputD.Text);
+                BigInteger N = BigInteger.Parse(inputN.Text);
+                string[] inputCryptedTextArray = fileText.Split(" ");
+                List<long> cryptedTextArray = new List<long>();
+                foreach (string elem in inputCryptedTextArray)
+                {
+                    long.TryParse(elem, out long parsedelem);
+                    cryptedTextArray.Add(parsedelem);
+                }
+
+                string decryptedText = RSAMethods.DeCrypt(cryptedTextArray, N, D);
+
+                string filename = saveFileDialog1.FileName;
+                System.IO.File.WriteAllText(filename, decryptedText);
+                MessageBox.Show("װאיכ נאסרטפנמגאם");
+                fileText = null;
+            }
+        }
 
         private void inputP_TextChanged(object sender, EventArgs e)
         {
@@ -131,10 +190,12 @@ namespace RSA
                 if ((!validationN || N < 2) && (!validationD || D < 2))
                 {
                     buttonDecrypt.Enabled = false;
+                    DecryptFile.Enabled = false;
                 }
                 else
                 {
                     buttonDecrypt.Enabled = true;
+                    DecryptFile.Enabled = true;
                 }
             }
         }
@@ -162,10 +223,12 @@ namespace RSA
                 if ((!validationN || N < 2) && (!validationD || D < 2))
                 {
                     buttonDecrypt.Enabled = false;
+                    DecryptFile.Enabled = false;
                 }
                 else
                 {
                     buttonDecrypt.Enabled = true;
+                    DecryptFile.Enabled = true;
                 }
             }
         }
@@ -196,10 +259,12 @@ namespace RSA
                 if ((!validationN || N < 2) && (!validationE || E < 2))
                 {
                     buttonEncrypt.Enabled = false;
+                    EncryptFile.Enabled = false;
                 }
                 else
                 {
                     buttonEncrypt.Enabled = true;
+                    EncryptFile.Enabled = true;
                 }
             }
         }
@@ -262,5 +327,7 @@ namespace RSA
         {
 
         }
+
+       
     }
 }
