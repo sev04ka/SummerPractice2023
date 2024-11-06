@@ -64,6 +64,11 @@
             label9 = new Label();
             label14 = new Label();
             label15 = new Label();
+            ChooseFile = new Button();
+            openFileDialog1 = new OpenFileDialog();
+            EncryptFile = new Button();
+            saveFileDialog1 = new SaveFileDialog();
+            DecryptFile = new Button();
             SuspendLayout();
             // 
             // inputE
@@ -448,11 +453,53 @@
             label15.TabIndex = 40;
             label15.Text = "Может занять несколько минут";
             // 
+            // ChooseFile
+            // 
+            ChooseFile.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            ChooseFile.Location = new Point(482, 586);
+            ChooseFile.Name = "ChooseFile";
+            ChooseFile.Size = new Size(180, 32);
+            ChooseFile.TabIndex = 41;
+            ChooseFile.Text = "Выбрать файл";
+            ChooseFile.UseVisualStyleBackColor = true;
+            ChooseFile.Click += ChooseFile_Click;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // EncryptFile
+            // 
+            EncryptFile.Enabled = false;
+            EncryptFile.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            EncryptFile.Location = new Point(482, 624);
+            EncryptFile.Name = "EncryptFile";
+            EncryptFile.Size = new Size(180, 32);
+            EncryptFile.TabIndex = 0;
+            EncryptFile.Text = "Зашифровать файл";
+            EncryptFile.UseVisualStyleBackColor = true;
+            EncryptFile.Click += EncryptFile_Click;
+            // 
+            // DecryptFile
+            // 
+            DecryptFile.Enabled = false;
+            DecryptFile.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            DecryptFile.Location = new Point(482, 662);
+            DecryptFile.Name = "DecryptFile";
+            DecryptFile.Size = new Size(180, 32);
+            DecryptFile.TabIndex = 42;
+            DecryptFile.Text = "Расшифровать файл";
+            DecryptFile.UseVisualStyleBackColor = true;
+            DecryptFile.Click += DecryptFile_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(674, 701);
+            Controls.Add(DecryptFile);
+            Controls.Add(EncryptFile);
+            Controls.Add(ChooseFile);
             Controls.Add(label15);
             Controls.Add(label14);
             Controls.Add(label9);
@@ -538,5 +585,10 @@
         private Label label9;
         private Label label14;
         private Label label15;
+        private Button ChooseFile;
+        private OpenFileDialog openFileDialog1;
+        private Button EncryptFile;
+        private SaveFileDialog saveFileDialog1;
+        private Button DecryptFile;
     }
 }
